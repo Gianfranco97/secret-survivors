@@ -19,6 +19,8 @@ public class MagnetItem : MonoBehaviour
 
     public void SuperMagnetize()
     {
+        SFXManager.instance.PlaySound("Magnet");
+        GameObject.Find("Player").GetComponent<PlayerActions>().circlePlayerAnimator.SetTrigger("SuperMagnet");
         actualRadius = magnetCollider.radius;
         magnetCollider.radius = 3000;
         Invoke(nameof(DisableSuperMagnetize), timeToDisableSuperMagnetize);

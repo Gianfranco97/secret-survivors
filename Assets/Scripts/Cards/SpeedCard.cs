@@ -1,21 +1,9 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class SpeedCard : MonoBehaviour, IPointerClickHandler
+public class SpeedCard : Card
 {
-    private GameObject cardContainer;
-    private PlayerActions playerActions;
-
-    private void Start()
+    protected override void OnCardClicked()
     {
-        cardContainer = GameObject.Find("CardContainer");
-        playerActions = GameObject.Find("Player").GetComponent<PlayerActions>();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        playerActions.speed = playerActions.speed * 1.2f;
-        cardContainer.SetActive(false);
-        Time.timeScale = 1;
+        GameObject.Find("Player").GetComponent<PlayerActions>().speed *= 1.2f;
     }
 }

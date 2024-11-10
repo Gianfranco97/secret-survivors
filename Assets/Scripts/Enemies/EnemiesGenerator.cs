@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,13 +10,20 @@ public class EnemiesGenerator : MonoBehaviour
     [SerializeField] private GameObject enemyFirePrefab;
     [SerializeField] private Transform spanwPoint;
     public List<GameObject> enemies;
+    private float timeBetweenBasicEnemies = 2f;
+    private float timeBetweenFastEnemies = 4f;
+    private float timeBetweenFireEnemies = 6f;
+    private float timeToIncreseDificulty = 30f;
 
     private GameObject player;
 
     private void Start()
     {
         player = GameObject.Find("Player");
-        StartCoroutine(GenerateEnemies());
+        StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyBasicPrefab), () => timeBetweenBasicEnemies));
+        StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyFastPrefab), () => timeBetweenFastEnemies));
+        //StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyFirePrefab), () => timeBetweenFireEnemies));
+        StartCoroutine(IncreseDificulty());
     }
 
     private void Update()
@@ -28,17 +36,23 @@ public class EnemiesGenerator : MonoBehaviour
         enemies.Add(Instantiate(enemyPrefab, spanwPoint.position, Quaternion.identity, transform));
     }
 
-    private IEnumerator GenerateEnemies()
+    private IEnumerator ExecuteEveryInterval(Action action, Func<float> getInterval)
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.25f);
-            GenerateEnemy(enemyBasicPrefab);
-            yield return new WaitForSeconds(1f);
-            GenerateEnemy(enemyFastPrefab);
-            yield return new WaitForSeconds(1f);
-            GenerateEnemy(enemyFirePrefab);
+            yield return new WaitForSeconds(getInterval());
+            action();
         }
+    }
+
+    private IEnumerator IncreseDificulty()
+    {
+        return ExecuteEveryInterval(() =>
+        {
+            timeBetweenBasicEnemies *= 0.65f;
+            timeBetweenFastEnemies *= 0.65f;
+            timeBetweenFireEnemies *= 0.65f;
+        }, () => timeToIncreseDificulty);
     }
 
     private void DestroyAllTheBullets()

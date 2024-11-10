@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3429758432157036093}
   - component: {fileID: 3496172240385170645}
-  - component: {fileID: 7301837436808274919}
   - component: {fileID: 6032977125173478893}
   - component: {fileID: 4002504385323284651}
   m_Layer: 5
@@ -29,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 3299298638836156620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3291725553945879835}
@@ -37,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.72, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &3496172240385170645
@@ -78,11 +77,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 333269881
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -514398539, guid: eabc985eff50a4049a3a0b52b595a8df, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5660378, g: 0.5526878, b: 0.5526878, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92,19 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7301837436808274919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3299298638836156620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 868fec6d070508a42abddd92f2ec7bb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
 --- !u!58 &6032977125173478893
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,7 +125,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.53125
+  m_Radius: 11
 --- !u!114 &4002504385323284651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,11 +211,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 333269881
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1325371954032481275, guid: 17fa068cbda0f9b4496d949d80f90659, type: 3}
-  m_Color: {r: 0.05660379, g: 0.0536668, b: 0.0536668, a: 1}
+  m_Sprite: {fileID: -5734135527909684958, guid: 17fa068cbda0f9b4496d949d80f90659, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

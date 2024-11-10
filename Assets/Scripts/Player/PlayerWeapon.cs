@@ -4,14 +4,16 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float bulletSpeed = 20f;
+    [SerializeField] private float bulletSpeed = 200f;
     public float timeBetweenShots = 0.4f;
     [SerializeField] private List<GameObject> firePoints;
     [SerializeField] private List<GameObject> firePointsActives;
+    [SerializeField] private Transform PupilHomunculus;
     [SerializeField] private PlayerActions player;
-    [SerializeField] Rigidbody2D playerBody;
+    [SerializeField] private VariantsSFX sfx;
     private Vector2 mausePosition;
     private float lastShotTime = 0f;
+    private float pupilRadius = 0.8f;
 
     private void Update()
     {
@@ -31,26 +33,32 @@ public class PlayerWeapon : MonoBehaviour
 
     void RotatePlayer()
     {
-        Vector2 lookDir = mausePosition - playerBody.position;
+        Vector2 lookDir = mausePosition - (Vector2)transform.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-        playerBody.rotation = angle;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        float zRad = (angle + 90) * Mathf.Deg2Rad;
+        float x = pupilRadius * Mathf.Cos(zRad);
+        float y = pupilRadius * Mathf.Sin(zRad);
+        PupilHomunculus.localPosition = new Vector2(x, y);
     }
 
     void CreateBullet(Transform firePoint)
     {
         GameObject bullet = Instantiate(bulletPrefab, new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z), firePoint.rotation);
-        bullet.GetComponent<BulletActions>().isDark = player.isDark;
+        bullet.GetComponent<IkarugaColor>().isDark = player.ikarugaColor.isDark;
         bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.up * bulletSpeed, ForceMode2D.Impulse);
 
         lastShotTime = Time.time;
 
-        Destroy(bullet, 2f);
+        Destroy(bullet, 3f);
     }
 
     public void Fire()
     {
         if (Time.time >= lastShotTime + timeBetweenShots)
         {
+            sfx.PlaySound();
             foreach (var firePoint in firePointsActives)
             {
                 CreateBullet(firePoint.transform);

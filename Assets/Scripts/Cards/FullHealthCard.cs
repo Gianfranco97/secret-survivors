@@ -1,19 +1,7 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class FullHealthCard : MonoBehaviour, IPointerClickHandler
+public class FullHealthCard : Card
 {
-    private GameObject cardContainer;
-
-    private void Start()
+    protected override void OnCardClicked()
     {
-        cardContainer = GameObject.Find("CardContainer");
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        PlayerLifeManager.Instance.FullHelath();
-        cardContainer.SetActive(false);
-        Time.timeScale = 1;
+        PlayerLifeManager.Instance.FullHealth();
     }
 }

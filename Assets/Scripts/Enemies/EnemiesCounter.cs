@@ -2,10 +2,18 @@ using TMPro;
 using UnityEngine;
 
 [System.Serializable]
-public class EnemiesDefeatCounter
+public class EnemiesDefeatCounterData
 {
     public int dark = 0;
     public int light = 0;
+    public int total => dark + light;
+}
+
+[System.Serializable]
+public class EnemiesDefeatCounterDataInGame : EnemiesDefeatCounterData
+{
+    public bool isDarkNewRecord = false;
+    public bool isLightNewRecord = false;
 }
 
 public enum EnemyType
@@ -15,54 +23,147 @@ public enum EnemyType
     Fire
 }
 
+[System.Serializable]
+public class TextCounter
+{
+    public TextMeshProUGUI recordDarkCounterText;
+    public TextMeshProUGUI lastGameDarkCounterText;
+    public TextMeshProUGUI recordLightCounterText;
+    public TextMeshProUGUI lastGameLightCounterText;
+}
+
+[System.Serializable]
+public class TextCounters
+{
+    public TextCounter basic = new TextCounter();
+    public TextCounter fast = new TextCounter();
+    public TextCounter fire = new TextCounter();
+}
+
+[System.Serializable]
+public class EnemiesDefeatCounterInGame
+{
+    public TextMeshProUGUI textComponent;
+    public Animator newRecordAnimator;
+    public bool isNewRecordShowedInGame = false;
+}
+
 public class EnemiesCounter : MonoBehaviour
 {
-    public EnemiesDefeatCounter basic = new EnemiesDefeatCounter();
-    public EnemiesDefeatCounter fast = new EnemiesDefeatCounter();
-    public EnemiesDefeatCounter fire = new EnemiesDefeatCounter();
-    [SerializeField] private TextMeshProUGUI basicCounterText;
-    [SerializeField] protected TextMeshProUGUI fastCounterText;
-    [SerializeField] public TextMeshProUGUI fireCounterText;
-    [SerializeField] private TextMeshProUGUI gameOverBasicDarkCounterText;
-    [SerializeField] private TextMeshProUGUI gameOverBasicLightCounterText;
-    [SerializeField] protected TextMeshProUGUI gameOverFastDarkCounterText;
-    [SerializeField] protected TextMeshProUGUI gameOverFastLightCounterText;
-    [SerializeField] public TextMeshProUGUI gameOverFireDarkCounterText;
-    [SerializeField] public TextMeshProUGUI gameOverFireLightCounterText;
+    public EnemiesDefeatCounterDataInGame basic = new EnemiesDefeatCounterDataInGame();
+    public EnemiesDefeatCounterDataInGame fast = new EnemiesDefeatCounterDataInGame();
+    public EnemiesDefeatCounterDataInGame fire = new EnemiesDefeatCounterDataInGame();
+    public EnemiesDefeatCounterInGame basicCounter;
+    public EnemiesDefeatCounterInGame fastCounter;
+    public EnemiesDefeatCounterInGame fireCounter;
+    [SerializeField] private TextCounters gameOver;
+    [SerializeField] private GameManager gameManager;
 
-    public void AddDefeatEnemy(EnemyType enemyType, bool isDark)
+    private EnemiesDefeatCounterData GetEnemyCounter(EnemyType enemyType, bool isRecord)
     {
         switch (enemyType)
         {
             case EnemyType.Basic:
-                if (isDark) basic.dark = basic.dark + 1;
-                else basic.light = basic.light + 1;
-                break;
+                return isRecord ? gameManager.gameDataRecord.enemyBasicDefeatRecord : basic;
             case EnemyType.Fast:
-                if (isDark) fast.dark = fast.dark + 1;
-                else fast.light = fast.light + 1;
-                break;
+                return isRecord ? gameManager.gameDataRecord.enemyFastDefeatRecord : fast;
             case EnemyType.Fire:
-                if (isDark) fire.dark = fire.dark + 1;
-                else fire.light = fire.light + 1;
-                break;
+                return isRecord ? gameManager.gameDataRecord.enemyFireDefeatRecord : fire;
+            default:
+                return null;
         }
     }
 
-    public void UpdateCounterTexts()
+    private EnemiesDefeatCounterInGame GetEnemiesDefeatCounterInGame(EnemyType enemyType)
     {
-        basicCounterText.text = (basic.light + basic.dark).ToString();
-        fastCounterText.text = (fast.dark + fast.light).ToString();
-        fireCounterText.text = (fire.dark + fire.light).ToString();
+        switch (enemyType)
+        {
+            case EnemyType.Basic:
+                return basicCounter;
+            case EnemyType.Fast:
+                return fastCounter;
+            case EnemyType.Fire:
+                return fireCounter;
+            default:
+                return null;
+        }
+    }
+
+    private void UpdateCounterText(EnemyType enemyType)
+    {
+        EnemiesDefeatCounterData enemyCounterRecord = GetEnemyCounter(enemyType, true);
+        EnemiesDefeatCounterData enemyCounterCurrentGame = GetEnemyCounter(enemyType, false);
+        EnemiesDefeatCounterInGame enemiesDefeatCounterInGame = GetEnemiesDefeatCounterInGame(enemyType);
+
+        enemiesDefeatCounterInGame.textComponent.text = enemyCounterCurrentGame.total.ToString();
+
+        if (enemyCounterCurrentGame.total > enemyCounterRecord.total && !enemiesDefeatCounterInGame.isNewRecordShowedInGame)
+        {
+            enemiesDefeatCounterInGame.newRecordAnimator.SetTrigger("ShowNewRecord");
+            enemiesDefeatCounterInGame.textComponent.color = Color.green;
+            enemiesDefeatCounterInGame.isNewRecordShowedInGame = true;
+        }
+    }
+
+    private void ShowGlow(TextMeshProUGUI textComponent)
+    {
+        var textWidth = textComponent.preferredWidth;
+        GameObject glow = textComponent.transform.Find("Glow").gameObject;
+        glow.transform.localPosition = new Vector3(textWidth + 5, 11, 0);
+        glow.SetActive(true);
+    }
+
+    private void FormatEnemyCounter(EnemyType enemyType, TextCounter enemyTextCounter)
+    {
+        EnemiesDefeatCounterDataInGame enemyCounterLastGame = GetEnemyCounter(enemyType, false) as EnemiesDefeatCounterDataInGame;
+        EnemiesDefeatCounterData enemyCounterRecord = GetEnemyCounter(enemyType, true);
+
+        enemyTextCounter.lastGameLightCounterText.text = enemyCounterLastGame.light.ToString();
+        enemyTextCounter.recordLightCounterText.text = enemyCounterRecord.light.ToString();
+        if (enemyCounterLastGame.isLightNewRecord)
+        {
+            enemyTextCounter.recordLightCounterText.color = Color.green;
+            enemyTextCounter.lastGameLightCounterText.color = Color.green;
+            ShowGlow(enemyTextCounter.recordLightCounterText);
+        }
+
+        enemyTextCounter.lastGameDarkCounterText.text = enemyCounterLastGame.dark.ToString();
+        enemyTextCounter.recordDarkCounterText.text = enemyCounterRecord.dark.ToString();
+        if (enemyCounterLastGame.isDarkNewRecord)
+        {
+            enemyTextCounter.recordDarkCounterText.color = Color.green;
+            enemyTextCounter.lastGameDarkCounterText.color = Color.green;
+            ShowGlow(enemyTextCounter.recordDarkCounterText);
+        }
+    }
+
+    private void FormatCounterTexts(TextCounters counterComponet)
+    {
+        FormatEnemyCounter(EnemyType.Basic, counterComponet.basic);
+        FormatEnemyCounter(EnemyType.Fast, counterComponet.fast);
+        FormatEnemyCounter(EnemyType.Fire, counterComponet.fire);
     }
 
     public void UpdateCounterTextsGameOver()
     {
-        gameOverBasicDarkCounterText.text = basic.dark.ToString();
-        gameOverBasicLightCounterText.text = basic.light.ToString();
-        gameOverFastDarkCounterText.text = fast.dark.ToString();
-        gameOverFastLightCounterText.text = fast.light.ToString();
-        gameOverFireDarkCounterText.text = fire.dark.ToString();
-        gameOverFireLightCounterText.text = fire.light.ToString();  
+        FormatCounterTexts(gameOver);
+    }
+
+    public void AddDefeatEnemy(EnemyType enemyType, bool isDark)
+    {
+        EnemiesDefeatCounterDataInGame enemyCounter = GetEnemyCounter(enemyType, false) as EnemiesDefeatCounterDataInGame;
+
+        if (isDark)
+        {
+            enemyCounter.dark += 1;
+            enemyCounter.isDarkNewRecord = enemyCounter.dark > GetEnemyCounter(enemyType, true).dark;
+        }
+        else
+        {
+            enemyCounter.light += 1;
+            enemyCounter.isLightNewRecord = enemyCounter.light > GetEnemyCounter(enemyType, true).light;
+        }
+
+        UpdateCounterText(enemyType);
     }
 }

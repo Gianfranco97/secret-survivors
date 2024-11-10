@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class KnockbackEnemy : MonoBehaviour
+public class KnockBackEnemy : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     private PlayerActions player;
@@ -12,17 +12,17 @@ public class KnockbackEnemy : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerActions>();
     }
 
-    public void PlayKnockback()
+    public void PlayKnockBack()
     {
         StopAllCoroutines();
         Vector2 direction = (transform.position - player.transform.position).normalized;
-        rb2d.AddForce(direction * player.knockbackStrength, ForceMode2D.Impulse);
+        rb2d.AddForce(direction * player.knockBackStrength, ForceMode2D.Impulse);
         StartCoroutine(Reset());
     }
 
     private IEnumerator Reset()
     {
-        yield return new WaitForSeconds(player.knockbackDelay);
+        yield return new WaitForSeconds(player.knockBackDelay);
         rb2d.velocity = Vector3.zero;
     }
 }

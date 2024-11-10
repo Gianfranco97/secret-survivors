@@ -1,13 +1,13 @@
 #define NAVMESHCOMPONENTS_SHOW_NAVMESHDATA_REF
 
 using System.Linq;
-using UnityEditor.IMGUI.Controls;
-using UnityEditorInternal;
-using UnityEngine.AI;
-using UnityEngine;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.AI;
-using System.Reflection;
+using UnityEditor.IMGUI.Controls;
+using UnityEditorInternal;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace NavMeshPlus.Components.Editors
 {
@@ -315,7 +315,7 @@ namespace NavMeshPlus.Components.Editors
         [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.Active | GizmoType.Pickable)]
         static void RenderGizmoSelected(NavMeshSurface navSurface, GizmoType gizmoType)
         {
-             //navSurface.navMeshDataInstance.FlagAsInSelectionHierarchy();
+            //navSurface.navMeshDataInstance.FlagAsInSelectionHierarchy();
             var method = navSurface.navMeshDataInstance.GetType().GetMethod("FlagAsInSelectionHierarchy", BindingFlags.NonPublic | BindingFlags.Instance);
             method.Invoke(navSurface.navMeshDataInstance, null);
             RenderBoxGizmo(navSurface, gizmoType, true);

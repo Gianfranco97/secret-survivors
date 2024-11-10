@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +15,7 @@ public class PlayerLifeManager : MonoBehaviour
     public static PlayerLifeManager Instance { get; private set; }
     private Animator playerAnimator;
     [SerializeField] private int maxLife = 3;
-    public int invulnaberabilityMilliseconds = 1000;
+    public int invulnerabilityMilliseconds = 1000;
     public LifeManager life;
 
     private void Awake()
@@ -30,11 +32,6 @@ public class PlayerLifeManager : MonoBehaviour
     private void Start()
     {
         ReacreateHeartsList();
-    }
-
-    void MakeVulnerable()
-    {
-        playerAnimator.SetBool("isVulnerable", true);
     }
 
     public void UpdateHearts()
@@ -60,6 +57,7 @@ public class PlayerLifeManager : MonoBehaviour
             }
         }
     }
+
     private void ReacreateHeartsList()
     {
         foreach (var heart in hearts)
@@ -78,6 +76,12 @@ public class PlayerLifeManager : MonoBehaviour
         UpdateHearts();
     }
 
+    private IEnumerator InvulnerabilityCoroutine()
+    {
+        playerAnimator.SetBool("isVulnerable", false);
+        yield return new WaitForSeconds(invulnerabilityMilliseconds / 1000f);
+        playerAnimator.SetBool("isVulnerable", true);
+    }
 
     public void TakeDamage(float damage)
     {
@@ -86,14 +90,19 @@ public class PlayerLifeManager : MonoBehaviour
             life.TakeDamage(damage);
             UpdateHearts();
 
+            SFXManager.instance.PlaySound("HitPlayer");
+
             if (life.currentHealth <= 0)
             {
                 GameManager.Instance.ShowGameOverMenu();
+                return;
             }
             else
             {
                 playerAnimator.SetBool("isVulnerable", false);
-                Invoke(nameof(MakeVulnerable), invulnaberabilityMilliseconds / 1000);
+                StopAllCoroutines();
+                StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(0.2f, 4f));
+                StartCoroutine(InvulnerabilityCoroutine());
             }
         }
     }
@@ -104,7 +113,7 @@ public class PlayerLifeManager : MonoBehaviour
         ReacreateHeartsList();
     }
 
-    public void FullHelath()
+    public void FullHealth()
     {
         life.Heal(life.maxHealth);
         ReacreateHeartsList();
@@ -114,5 +123,10 @@ public class PlayerLifeManager : MonoBehaviour
     {
         life.Heal(amount);
         ReacreateHeartsList();
+    }
+
+    public bool IsFullHealth()
+    {
+        return life.currentHealth == life.maxHealth;
     }
 }

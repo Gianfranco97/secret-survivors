@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1993492137013006321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5913677091738711598}
+  - component: {fileID: 7558371198099631653}
+  - component: {fileID: 6468630828623461991}
+  m_Layer: 0
+  m_Name: GeneralSFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5913677091738711598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993492137013006321}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.2, y: 0.6, z: -2.5876782}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &7558371198099631653
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993492137013006321}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 2098.157
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &6468630828623461991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993492137013006321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3377802262dd56d49a3de8eb5d1256dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioData:
+  - name: LevelUp
+    clip: {fileID: 8300000, guid: 9c80104b1f391704a91fae180344af0c, type: 3}
+  - name: CardSelected
+    clip: {fileID: 8300000, guid: 001ee21d72dfa7a4a99e9cde60b69b58, type: 3}
+  - name: HitPlayer
+    clip: {fileID: 8300000, guid: 1fbc8751a076ba048911dae4ea658bae, type: 3}
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 1b184980c54a00449b40a3346e6cc27d, type: 3}
+  - name: Boom
+    clip: {fileID: 8300000, guid: 1a73f7b05b220cf4b9051b73dd84864e, type: 3}
+  - name: Heal
+    clip: {fileID: 8300000, guid: efd233b36ec143d40ae33a74da8edfa9, type: 3}
+  - name: Magnet
+    clip: {fileID: 8300000, guid: e2ff2cc397a957e4f87b372e8224b8ef, type: 3}
+  - name: Energy
+    clip: {fileID: 8300000, guid: 78388efa3b9464e4f93ff2edc80dbc2b, type: 3}
+  - name: BossAttack
+    clip: {fileID: 8300000, guid: 26b758f62b14ca8498816e428d86b049, type: 3}
+  - name: ButtonMenu
+    clip: {fileID: 8300000, guid: 5201e43a140e6694884e67136138fa48, type: 3}
+  - name: BossIntro
+    clip: {fileID: 8300000, guid: cf4dd650570b8034c9fbf4e0b4bc8cfd, type: 3}
+  - name: BossAttack
+    clip: {fileID: 8300000, guid: 26b758f62b14ca8498816e428d86b049, type: 3}
+  - name: BossAttackExplotion
+    clip: {fileID: 8300000, guid: ac4cdb405205363429d343391e19c4ab, type: 3}
+  - name: BossHit
+    clip: {fileID: 8300000, guid: ca209088a5c490548b13a51c6ccc579d, type: 3}
+  - name: BossHeadDead
+    clip: {fileID: 8300000, guid: 84f08c32f53fad74db5e0852bc2fd467, type: 3}
+  audioSource: {fileID: 7558371198099631653}

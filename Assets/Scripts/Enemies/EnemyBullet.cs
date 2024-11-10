@@ -3,30 +3,22 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     public float damage = 1f;
-    public bool isDark = false;
-    private Transform player;
-    private SpriteRenderer spriteRenderer;
+    public IkarugaColor ikarugaColor;
+    public PlayerActions player;
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = isDark ? Color.red : Color.green;
+        GameObject playerGameObject = GameObject.Find("Player");
+        player = playerGameObject.GetComponent<PlayerActions>();
 
-        player = GameObject.Find("Player").transform;
-        Vector3 direction = (player.position - transform.position).normalized;
+        ikarugaColor = playerGameObject.GetComponent<IkarugaColor>();
+        Vector3 direction = (player.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D()
     {
-        if (collision.CompareTag("Player"))
-        {
-            if (collision.gameObject.GetComponent<PlayerActions>().isDark != isDark)
-            {
-                PlayerLifeManager.Instance.TakeDamage(damage);
-                Destroy(gameObject);
-            }
-        }
+        Destroy(gameObject);
     }
 }

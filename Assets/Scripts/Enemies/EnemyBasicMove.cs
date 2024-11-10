@@ -14,7 +14,7 @@ public class EnemyBasicMove : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         if (target) agent.SetDestination(target.position);
     }

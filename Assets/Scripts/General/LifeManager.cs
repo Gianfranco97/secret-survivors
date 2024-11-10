@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class LifeManager 
+[System.Serializable]
+public class LifeManager
 {
     public float maxHealth { get; private set; }
     public float currentHealth { get; private set; }
@@ -14,7 +15,7 @@ public class LifeManager
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); 
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     public void Heal(float amount)
