@@ -12,7 +12,8 @@ public class EnemiesGenerator : MonoBehaviour
     public List<GameObject> enemies;
     private float timeBetweenBasicEnemies = 2f;
     private float timeBetweenFastEnemies = 4f;
-    private float timeBetweenFireEnemies = 6f;
+    //private float timeBetweenFireEnemies = 18f;
+    private float timeBetweenFireEnemies = 4f;
     private float timeToIncreseDificulty = 30f;
 
     private GameObject player;
@@ -20,9 +21,9 @@ public class EnemiesGenerator : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player");
-        StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyBasicPrefab), () => timeBetweenBasicEnemies));
-        StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyFastPrefab), () => timeBetweenFastEnemies));
-        //StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyFirePrefab), () => timeBetweenFireEnemies));
+        //StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyBasicPrefab), () => timeBetweenBasicEnemies));
+        //StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyFastPrefab), () => timeBetweenFastEnemies));
+        StartCoroutine(ExecuteEveryInterval(() => GenerateEnemy(enemyFirePrefab), () => timeBetweenFireEnemies));
         StartCoroutine(IncreseDificulty());
     }
 

@@ -17,9 +17,14 @@ public class IkarugaColor : MonoBehaviour
         spriteRenderer.sprite = isDark ? darkSprite : lightSprite;
     }
 
+    public void SetColor(bool newValueIsDark)
+    {
+        isDark = newValueIsDark;
+        MatchColor();
+    }
+
     public void SwitchColor()
     {
-        isDark = !isDark;
-        MatchColor();
+        SetColor(!isDark);
     }
 }

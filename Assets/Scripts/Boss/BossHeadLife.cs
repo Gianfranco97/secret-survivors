@@ -23,7 +23,10 @@ public class BossHeadLife : MonoBehaviour
         life = new LifeManager(maxHealth);
         player = GameObject.Find("Player").GetComponent<PlayerActions>();
         ikarugaColor = GetComponent<IkarugaColor>();
-        ikarugaShield.GetComponent<IkarugaColor>().isDark = ikarugaColor.isDark;
+        if (ikarugaShield)
+        {
+            ikarugaShield.GetComponent<IkarugaColor>().isDark = ikarugaColor.isDark;
+        }
     }
 
     private IEnumerator ShowIkarugaShield()
@@ -36,7 +39,7 @@ public class BossHeadLife : MonoBehaviour
 
     private IEnumerator TakeDamage(int damage, bool isInvulnerable)
     {
-        if (isInvulnerable)
+        if (isInvulnerable && ikarugaShield)
         {
             if (shieldCorutine != null) StopCoroutine(shieldCorutine);
             shieldCorutine = StartCoroutine(ShowIkarugaShield());
@@ -52,6 +55,7 @@ public class BossHeadLife : MonoBehaviour
 
         if (life.currentHealth <= 0)
         {
+            Debug.Log("Boss Dead");
             SFXManager.instance.PlaySound("BossHeadDead");
             animatorHead.SetTrigger("Dead");
             yield return new WaitForSeconds(deathTime);
@@ -61,14 +65,13 @@ public class BossHeadLife : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bullet") || collision.CompareTag("Orbital"))
+        if ((collision.CompareTag("Bullet") || collision.CompareTag("Orbital")))
         {
+            int damage = collision.CompareTag("Bullet") ? player.bulletDamage : player.orbitalDamage;
             IkarugaColor bullet = collision.gameObject.GetComponent<IkarugaColor>();
-            bool isInvulnerable = ikarugaColor.isDark == bullet.isDark;
-            int damage = isInvulnerable
-                    ? 0 : collision.CompareTag("Bullet") ? player.bulletDamage : player.orbitalDamage;
+            bool isInvulnerable = ikarugaColor ? ikarugaColor.isDark == bullet.isDark : false;
 
-            StartCoroutine(TakeDamage(damage, isInvulnerable));
+            StartCoroutine(TakeDamage(isInvulnerable ? 0 : damage, isInvulnerable));
         }
 
         if (collision.CompareTag("Bullet"))

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MagnetItem : MonoBehaviour
@@ -6,6 +7,7 @@ public class MagnetItem : MonoBehaviour
     private float actualRadius;
     private float timeToDestroy = 0.1f;
     private float timeToDisableSuperMagnetize = 0.05f;
+    private float superSpeed = 450;
 
     private void Start()
     {
@@ -17,8 +19,17 @@ public class MagnetItem : MonoBehaviour
         magnetCollider.radius = actualRadius;
     }
 
+    private IEnumerator ChangeMagnetSpeed()
+    {
+        float originalSpeed = MagnetInfo.speed;
+        MagnetInfo.speed = superSpeed;
+        yield return new WaitForSeconds(1);
+        MagnetInfo.speed = originalSpeed;
+    }
+
     public void SuperMagnetize()
     {
+        StartCoroutine(ChangeMagnetSpeed());
         SFXManager.instance.PlaySound("Magnet");
         GameObject.Find("Player").GetComponent<PlayerActions>().circlePlayerAnimator.SetTrigger("SuperMagnet");
         actualRadius = magnetCollider.radius;

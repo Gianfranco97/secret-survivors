@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,6 +84,7 @@ public class PlayerLifeManager : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        /*
         if (playerAnimator.GetBool("isVulnerable"))
         {
             life.TakeDamage(damage);
@@ -104,7 +104,7 @@ public class PlayerLifeManager : MonoBehaviour
                 StartCoroutine(Camera.main.GetComponent<CameraShake>().Shake(0.2f, 4f));
                 StartCoroutine(InvulnerabilityCoroutine());
             }
-        }
+        }*/
     }
 
     public void AddNewHeart()

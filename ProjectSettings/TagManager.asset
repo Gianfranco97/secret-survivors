@@ -17,6 +17,7 @@ TagManager:
   - Orbital
   - BossHead
   - BossHeadBullet
+  - BossAreaExplotion
   layers:
   - Default
   - TransparentFX
@@ -56,6 +57,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2727730839
+    locked: 0
+  - name: BossLasers
+    uniqueID: 2066337805
     locked: 0
   - name: Foreground
     uniqueID: 333269881

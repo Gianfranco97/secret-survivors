@@ -17,7 +17,7 @@ public class ObjectMagnet : MonoBehaviour
     {
         if (magnetOn)
         {
-            transform.position = Vector2.MoveTowards(transform.position, GameObject.Find("Player").transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, GameObject.Find("Player").transform.position, MagnetInfo.speed * Time.deltaTime);
         }
     }
 }

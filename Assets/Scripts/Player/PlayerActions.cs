@@ -97,9 +97,8 @@ public class PlayerActions : MonoBehaviour
 
             if (distance <= knockBackDistance)
             {
-                Debug.Log("Knockback");
-                enemy.GetComponent<KnockBackEnemy>().PlayKnockBack();
-                enemy.GetComponent<EnemyHitStop>().TriggerHitStop();
+                enemy.GetComponent<KnockBackEnemy>()?.PlayKnockBack();
+                enemy.GetComponent<EnemyHitStop>()?.TriggerHitStop();
             }
         }
     }

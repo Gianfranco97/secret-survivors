@@ -28,7 +28,7 @@ public class EnemyFire : MonoBehaviour
         enemyBullet.ikarugaColor.isDark = ikarugaColor.isDark;
         enemyBullet.damage = bulletDamage;
         bulletBody.AddForce((player.transform.position - firePoint.position).normalized * bulletSpeed, ForceMode2D.Impulse);
-        enemyBullet.gameObject.GetComponentInChildren<Animator>()?.SetBool("isDark", ikarugaColor.isDark);
+        enemyBullet.gameObject.GetComponentInChildren<Animator>()?.SetTrigger(ikarugaColor.isDark ? "showDark" : "showLight");
 
         return bullet;
     }
