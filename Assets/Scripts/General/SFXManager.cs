@@ -46,4 +46,9 @@ public class SFXManager : MonoBehaviour
             Debug.LogWarning("Sound " + name + " not found!");
         }
     }
+
+    public void StopSound()
+    {
+        audioSource.Stop();
+    }
 }

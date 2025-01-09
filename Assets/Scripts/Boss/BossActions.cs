@@ -7,7 +7,8 @@ public enum BossStage
 {
     None,
     Stage1,
-    Stage2
+    Stage2,
+    Finished
 }
 
 public class BossActions : MonoBehaviour
@@ -54,6 +55,8 @@ public class BossActions : MonoBehaviour
     
     private IEnumerator FishishBattle()
     {
+        SFXManager.instance.StopSound();
+        bossStage = BossStage.Finished;
         Time.timeScale = 0f;
         var playerPosition = GameObject.Find("Player").transform.position;
         Camera.main.transform.position = new Vector3(playerPosition.x, playerPosition.y, Camera.main.transform.position.z);
@@ -80,7 +83,13 @@ public class BossActions : MonoBehaviour
             return;
         }
 
-        if (bossHead1Life.value == 0 && bossHead2Life.value == 0 && bossHead3Life.value == 0 && bossHead4Life.value == 0 && bossStage == BossStage.Stage2)
+        if (
+            bossHead1Life.value == 0 
+            && bossHead2Life.value == 0 
+            && bossHead3Life.value == 0 
+            && bossHead4Life.value == 0 
+            && bossStage == BossStage.Stage2
+        )
         {
             StartCoroutine(FishishBattle());
         }

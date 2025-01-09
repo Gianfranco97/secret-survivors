@@ -13,6 +13,7 @@ public class BossHyperLaser : MonoBehaviour
     public void StartLaser()
     {
         isDark = !isDark;
+        SFXManager.instance.PlaySound("BossLaser");
         IkarugaColor[] colors = lasersContainer.GetComponentsInChildren<IkarugaColor>();
         foreach (IkarugaColor color in colors)
         {

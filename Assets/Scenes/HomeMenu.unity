@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 422834526}
   - component: {fileID: 422834525}
   m_Layer: 5
-  m_Name: Credist
+  m_Name: Credits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Credist '
+  m_text: 'Credits '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a1b1fe6b5f91e85498323a578b7bf0e2, type: 2}
   m_sharedMaterial: {fileID: -4594487306459390042, guid: a1b1fe6b5f91e85498323a578b7bf0e2, type: 2}

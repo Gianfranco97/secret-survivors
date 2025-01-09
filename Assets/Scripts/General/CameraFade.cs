@@ -46,10 +46,10 @@ public class CameraFade : MonoBehaviour
         if (direction != 0)
         {
             time += direction * Time.unscaledDeltaTime * speedScale;
-            alpha = Curve.Evaluate(time);
+            alpha = Mathf.Clamp01(Curve.Evaluate(time));
             texture.SetPixel(0, 0, new Color(fadeColor.r, fadeColor.g, fadeColor.b, alpha));
             texture.Apply();
-            if (alpha <= 0f || alpha >= 1f) direction = 0;
+            if (time <= 0f || time >= 1f) direction = 0;
         }
     }
 }
